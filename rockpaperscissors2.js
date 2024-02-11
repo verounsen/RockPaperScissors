@@ -1,42 +1,58 @@
-console.log("Hello Veeeri");
+document.addEventListener("DOMContentLoaded", function() {
+
+var rockButton = document.getElementById("rock");
+var paperButton = document.getElementById("paper");
+var scissorsButton = document.getElementById("scissors");
 
 const choices = ["rock", "paper", "scissors"];
 let userChoice;
 let computerChoice;
 
 
-getUserChoice();
-generateComputerChoice();
-chooseWinner();
+rockButton.addEventListener("click", getUserChoice);
+paperButton.addEventListener("click", getUserChoice);
+scissorsButton.addEventListener("click", getUserChoice);
 
 
 function getUserChoice(){
-userChoice = prompt("Enter your choice (Rock, Paper, or Scissors):").toLowerCase();
-console.log("You chose:", userChoice);
+var clickedButton = event.target;
+var buttonText = clickedButton.textContent;
+userChoice = buttonText; 
+//console.log("You chose:", userChoice);
+generateComputerChoice();
 }
 
 function generateComputerChoice() {
   const computerChoiceIndex = Math.floor(Math.random() * choices.length);
   computerChoice = choices[computerChoiceIndex];
-  console.log("Computer chose:", computerChoice);
+  //console.log("Computer chose:", computerChoice);
+  chooseWinner();
 }
 
 function chooseWinner(){
-    if (userChoice==computerChoice){
-        console.log("tie!");
+    var resultDiv = document.querySelector('[result]');
+    var winnerDiv = document.querySelector('[winner]');
+    var resultMessage;
+
+    if (userChoice == computerChoice){
+        resultMessage = "It's a tie!";
     } else if (userChoice == "rock" && computerChoice == "paper"){
-        console.log("you lose!");
-    }    else if (userChoice == "rock" && computerChoice == "scissors"){
-        console.log("you win");
+        resultMessage = "You lose!";
+    } else if (userChoice == "rock" && computerChoice == "scissors"){
+        resultMessage = "You win!";
     } else if (userChoice == "scissors" && computerChoice == "rock"){
-        console.log("you lose");
-    } else if (userChoice =="scissors" && computerChoice == "paper"){
-        console.log("you win");
-    } else if (userChoice =="paper" && computerChoice == "scissors"){
-        console.log("you lose");
-    } else if (userChoice =="paper" && computerChoice == "rock"){
-        console.log("you win");
+        resultMessage = "You lose!";
+    } else if (userChoice == "scissors" && computerChoice == "paper"){
+        resultMessage = "You win!";
+    } else if (userChoice == "paper" && computerChoice == "scissors"){
+        resultMessage = "You lose!";
+    } else if (userChoice == "paper" && computerChoice == "rock"){
+        resultMessage = "You win!";
     } else {
-        console.log("User Input unclear")
+        resultMessage = "User input unclear";
     }
+
+    resultDiv.textContent = "You chose: " + userChoice + ", Computer chose: " + computerChoice  
+    winnerDiv.textContent = resultMessage;
 }
+});
